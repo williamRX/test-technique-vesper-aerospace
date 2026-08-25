@@ -1,15 +1,5 @@
 """
 Module des schémas de données et Data Transfer Objects (DTO).
-
-Pourquoi l'utilisation de @dataclass(slots=True, frozen=True) ?
---------------------------------------------------------------
-1. Performance Mémoire (slots=True) : En activant `slots=True`, Python n'alloue pas de
-   dictionnaire dynamique `__dict__` pour chaque instance. Cela réduit la consommation
-   mémoire d'environ 66%, ce qui est crucial lors du traitement de séries temporelles
-   contenant des milliers de bougies OHLCV.
-2. Immuabilité (frozen=True) : Garantit la sécurité des données. Une fois qu'une bougie ou
-   qu'un résultat de calcul est créé, ses propriétés ne peuvent plus être modifiées
-   accidentellement par une fonction intermédiaire.
 """
 
 from dataclasses import dataclass

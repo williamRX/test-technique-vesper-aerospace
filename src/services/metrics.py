@@ -1,18 +1,5 @@
 """
 Module de calculs financiers et de métriques de volatilité.
-
-Pourquoi ce choix d'implémentation mathématique (Math Standard vs NumPy) ?
-------------------------------------------------------------------------
-1. Indépendance et Légèreté : Pour des séries de N = 30 points par paire, l'utilisation de la
-   bibliothèque standard `math` de Python s'exécute en une fraction de milliseconde sans le surcoût
-   d'allocation mémoire d'un tableau NumPy.
-2. Variance Échantillonnée (n-1 degrés de liberté) : Nous appliquons le diviseur (M - 1)
-   dans le calcul de la variance afin de fournir un estimateur non biaisé de la volatilité
-   quotidienne.
-3. Formule Validée :
-   - Rendement relatif journalier : R_t = (Close_t - Close_{t-1}) / Close_{t-1}
-   - Variance : Sum((R_t - R_moyen)^2) / (M - 1)
-   - Volatilité quotidienne : sqrt(Variance)
 """
 
 import logging

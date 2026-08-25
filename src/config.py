@@ -1,16 +1,5 @@
 """
 Module de configuration centralisé de l'application.
-
-Pourquoi Pydantic BaseSettings (model_config = SettingsConfigDict(...)) ?
--------------------------------------------------------------------------
-1. Validation automatique des types à l'exécution : Empêche les erreurs silencieuses
-   si un utilisateur passe un nombre de jours négatif ou une chaîne invalide.
-2. Découplage de la configuration : Permet de surcharger chaque paramètre via :
-   - Des variables d'environnement (ex: EXPORT_QUOTE_CURRENCY="USD")
-   - Un fichier .env local
-   - Des paramètres passés en ligne de commande (CLI)
-3. Pattern 'Single Source of Truth' : Évite de hardcoder des constantes éparpillées
-   dans les différents modules de l'application.
 """
 
 import logging

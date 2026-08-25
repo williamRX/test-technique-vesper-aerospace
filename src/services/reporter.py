@@ -1,13 +1,5 @@
 """
 Module d'exportation des résultats au format CSV.
-
-Pourquoi le module standard `csv.DictWriter` ?
-----------------------------------------------
-1. Respect Strict du Format Spécifié : Garantit l'en-tête exact demandé dans le cahier des charges :
-   `base,quote,daily_volatility,last_price,average_volume`
-2. Zéro Dépendance Lourde : Évite d'obliger l'installation de Pandas uniquement pour
-   écrire des lignes dans un CSV, réduisant le temps de démarrage du script à quelques millisecondes.
-3. Écriture Atomique et Sûre : Crée automatiquement le dossier destination (`csv/`) et gère l'encodage UTF-8.
 """
 
 import csv

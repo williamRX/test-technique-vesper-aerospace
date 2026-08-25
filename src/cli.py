@@ -1,13 +1,5 @@
 """
 Interface en ligne de commande (CLI) pour l'exécution du calculateur de volatilité Crypto/Fiat.
-
-Pourquoi argparse standard ?
-----------------------------
-1. Zéro dépendance externe supplémentaire : Intégré nativement à la bibliothèque standard Python.
-2. Mode non-interactif et scriptable : Permet le lancement direct sans aucune demande utilisateur,
-   tout en permettant la surcharge ponctuelle des arguments (ex: --exchange binance --quote EUR --days 30).
-3. Code de retour Unix propre (exit codes) : Retourne 0 en cas de succès et 1 en cas de erreur
-   pour s'intégrer parfaitement dans des pipelines CI/CD ou des cron jobs.
 """
 
 import argparse

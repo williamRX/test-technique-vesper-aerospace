@@ -1,16 +1,5 @@
 """
 Service de connexion et de collecte de données de marché via la bibliothèque CCXT.
-
-Pourquoi ce design de service autonome ?
----------------------------------------
-1. Decouplage total des APIs externes : La logique propre aux spécificités de CCXT
-   est encapsulée ici. Si l'API d'un exchange change ou nécessite un retry custom,
-   seul ce module est impacté.
-2. Resilience & Rate Limiting (`enableRateLimit=True`) : Les exchanges crypto appliquent des
-   quotas stricts de requêtes HTTP. CCXT gère automatiquement les délais d'attente
-   (`time.sleep`) pour éviter le bannissement d'IP lors de la boucle sur des dizaines de paires.
-3. Instanciation Dynamique : L'exchange n'est pas hardcodé ; il est instancié dynamiquement
-   via `getattr(ccxt, exchange_name)()` pour permettre la bascule entre Binance, Coinbase, etc.
 """
 
 import logging
