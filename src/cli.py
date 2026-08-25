@@ -99,6 +99,9 @@ def run_pipeline(
         logger.info(f"✅ Traitement terminé avec succès ! {len(results)} paires analysées.")
         return 0
 
+    except KeyboardInterrupt:
+        logger.warning("\n⚠️ Interruption par l'utilisateur (Ctrl+C). Arrêt propre du script.")
+        return 130
     except Exception as e:
         logger.critical(f"❌ Erreur critique durant l'exécution du pipeline : {e}", exc_info=True)
         return 1

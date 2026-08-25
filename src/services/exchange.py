@@ -109,9 +109,16 @@ class CryptoExchangeService:
         """
         limit = days_period or settings.DAYS_PERIOD
 
+        import time
+
         try:
             # Appel API CCXT public
             raw_candles = self.client.fetch_ohlcv(symbol, timeframe=timeframe, limit=limit)
+
+            # Pause explicite entre chaque requête pour respecter la politique anti-bannissement IP
+            if settings.RATE_LIMIT_DELAY > 0:
+                time.sleep(settings.RATE_LIMIT_DELAY)
+
         except ccxt.RateLimitExceeded as e:
             logger.warning(f"Rate limit atteint sur {symbol}: {e}. Attente...")
             return []

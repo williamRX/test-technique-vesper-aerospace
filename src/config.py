@@ -56,6 +56,13 @@ class Settings(BaseSettings):
         description="Si True, ignore les paires n'ayant pas la totalité des jours d'historique requis.",
     )
 
+    # Délai de sécurité en secondes entre chaque appel API (en plus du rateLimiter CCXT)
+    RATE_LIMIT_DELAY: float = Field(
+        default=0.1,
+        ge=0.0,
+        description="Pause explicite (en s) entre chaque requête HTTP pour garantir zéro bannissement IP.",
+    )
+
     # Configuration de l'application
     PROJECT_NAME: str = "Crypto Volatility Calculator"
     VERSION: str = "0.1.0"
