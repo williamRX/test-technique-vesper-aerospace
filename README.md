@@ -23,8 +23,8 @@ Calculateur de la **volatilité quotidienne** des crypto-monnaies d'une platefor
 │   ├── main.py           # Point d'entrée script principal
 │   ├── models/           # Dataclasses immuables (MarketCandle, VolatilityResult)
 │   └── services/         # Services CCXT, Métriques mathématiques & Reporter CSV
-├── tests/                # Suite de tests automatisés Pytest (11 tests)
-└── docs/                 # Tickets de spécifications (Tickets 1 à 5)
+├── tests/                # Suite de tests Pytest (11 tests)
+└── docs/                 # Documentation technique globale (DOCUMENTATION.md)
 ```
 
 ---

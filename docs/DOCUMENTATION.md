@@ -26,13 +26,8 @@ Test Technique/
 ├── pyproject.toml        # Dépendances (CCXT, Pydantic, Pytest, Ruff) & Config outillage
 ├── README.md             # Documentation d'accueil et Quickstart
 ├── csv/                  # Dossier de destination des rapports CSV horodatés
-├── docs/                 # Documentation technique et tickets de spécification
-│   ├── DOCUMENTATION.md  # Documentation technique globale
-│   ├── ticket-1-config-and-cli.md
-│   ├── ticket-2-data-fetching-ccxt.md
-│   ├── ticket-3-volatility-engine.md
-│   ├── ticket-4-reporting-and-csv.md
-│   └── ticket-5-testing-and-validation.md
+├── docs/                 # Documentation technique globale
+│   └── DOCUMENTATION.md  # Spécifications et manuel d'utilisation
 ├── src/                  # Code source modulé
 │   ├── cli.py            # Interface CLI (argparse, gestion d'erreurs et exit codes)
 │   ├── config.py         # Configuration centralisée (Pydantic BaseSettings v2)
