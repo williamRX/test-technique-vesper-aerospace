@@ -54,6 +54,28 @@ class CryptoExchangeService:
         )
         logger.info(f"Service Exchange initialisé pour '{self.exchange_name}' (RateLimit actif).")
 
+    def get_available_fiat_quotes(self) -> list[str]:
+        """
+        Récupère dynamiquement la liste de toutes les devises de cotation (Quote) disponibles sur l'exchange.
+
+        Returns:
+            list[str]: Liste triée des monnaies de cotation (ex: ['EUR', 'USD', 'USDT', 'GBP', 'TRY', ...]).
+        """
+        try:
+            markets = self.client.load_markets()
+        except (ccxt.NetworkError, ccxt.ExchangeError) as e:
+            logger.error(f"Échec lors du chargement des marchés sur {self.exchange_name}: {e}")
+            return []
+
+        quotes = set()
+        for market in markets.values():
+            if market.get("active", True) and market.get("spot", True):
+                quote = market.get("quote")
+                if quote:
+                    quotes.add(quote.upper())
+
+        return sorted(quotes)
+
     def fetch_fiat_pairs(self, quote_currency: str | None = None) -> list[str]:
         """
         Récupère toutes les paires Spot actives associées à une devise Fiat de cotation.

@@ -115,6 +115,11 @@ def main() -> None:
         description="Calculateur de Volatilité Crypto asset vs Fiat currency (CCXT & Python)."
     )
     parser.add_argument(
+        "--list-quotes",
+        action="store_true",
+        help="Affiche la liste de toutes les devises de cotation (Fiat/Stablecoins) disponibles sur l'exchange.",
+    )
+    parser.add_argument(
         "--exchange",
         type=str,
         default=settings.EXCHANGE,
@@ -140,6 +145,14 @@ def main() -> None:
     )
 
     args = parser.parse_args()
+
+    if args.list_quotes:
+        exchange_service = CryptoExchangeService(exchange_id=args.exchange)
+        quotes = exchange_service.get_available_fiat_quotes()
+        print(f"\n🌍 Devises de cotation (Quotes) disponibles sur '{args.exchange.lower()}' ({len(quotes)} trouvées) :")
+        print(", ".join(quotes))
+        print()
+        sys.exit(0)
 
     exit_code = run_pipeline(
         exchange_id=args.exchange,
