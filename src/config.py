@@ -44,10 +44,15 @@ class Settings(BaseSettings):
         description="Nombre de jours d'historique d'analyse (minimum 2 jours pour calculer une variance).",
     )
 
-    # Chemin du fichier CSV généré en sortie
+    # Dossier et fichier de sortie CSV
+    OUTPUT_DIR: str = Field(
+        default="csv",
+        description="Répertoire de stockage des rapports CSV horodatés.",
+    )
+
     OUTPUT_FILE: str = Field(
         default="crypto_volatility.csv",
-        description="Fichier CSV destination des résultats de volatilité.",
+        description="Nom de base du fichier CSV destination.",
     )
 
     # Gestion des cas limites (Option A: Strict = ignorer les paires avec < DAYS_PERIOD bougies)
