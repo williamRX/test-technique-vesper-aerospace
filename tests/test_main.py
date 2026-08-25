@@ -3,7 +3,9 @@ def test_read_root(client):
     assert response.status_code == 200
     data = response.json()
     assert data["status"] == "ready"
-    assert "message" in data
+    assert "service" in data
+    assert data["exchange_default"] == "binance"
+    assert data["quote_default"] == "EUR"
 
 
 def test_health_check(client):
