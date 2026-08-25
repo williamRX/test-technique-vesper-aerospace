@@ -1,6 +1,6 @@
-# Test Technique - Backend & Data Shell
+# Test Technique - Calculateur de Volatilité Crypto / Fiat (CLI)
 
-Ce dépôt contient le projet développé dans le cadre du test technique. Il est pré-configuré avec une architecture modulaire en Python 3.11+, un outillage de qualité (Pytest, Ruff) et une conteneurisation Docker.
+Ce dépôt contient l'application Python en **ligne de commande (CLI)** développée dans le cadre du test technique. Elle permet de calculer la volatilité quotidienne, le dernier prix et le volume moyen des actifs crypto par rapport à une monnaie Fiat via la bibliothèque **CCXT**.
 
 ---
 
@@ -14,16 +14,16 @@ Calculateur de la **volatilité quotidienne** des crypto-monnaies d'une platefor
 
 ```text
 .
-├── Dockerfile            # Containerisation du service
-├── pyproject.toml        # Dépendances (CCXT, FastAPI, Pytest, Ruff)
+├── pyproject.toml        # Dépendances (CCXT, Pydantic, Pytest, Ruff)
 ├── README.md             # Documentation principale
+├── csv/                  # Rapports CSV horodatés générés
 ├── src/                  # Code source
-│   ├── cli.py            # Point d'entrée CLI
-│   ├── config.py         # Settings & Logging Pydantic v2
-│   ├── main.py           # Point d'entrée script & API
+│   ├── cli.py            # Interface en ligne de commande (argparse)
+│   ├── config.py         # Configuration centralisée (Pydantic BaseSettings)
+│   ├── main.py           # Point d'entrée script principal
 │   ├── models/           # Dataclasses immuables (MarketCandle, VolatilityResult)
 │   └── services/         # Services CCXT, Métriques mathématiques & Reporter CSV
-├── tests/                # Suite de tests Pytest (11 tests)
+├── tests/                # Suite de tests automatisés Pytest (11 tests)
 └── docs/                 # Tickets de spécifications (Tickets 1 à 5)
 ```
 
@@ -32,7 +32,6 @@ Calculateur de la **volatilité quotidienne** des crypto-monnaies d'une platefor
 ## ⚙️ 3. Préréquis
 
 - **Python :** `>= 3.11`
-- **Docker :** Optionnel (pour la conteneurisation)
 
 ---
 
@@ -40,10 +39,8 @@ Calculateur de la **volatilité quotidienne** des crypto-monnaies d'une platefor
 
 ### 4.1. Activer l'environnement virtuel Python
 
-Le dossier du venv s'appelle **`.venv`** (avec un point au début) :
-
 ```bash
-# 1. Activation de l'environnement virtuel (macOS / Linux)
+# Activation de l'environnement virtuel (.venv)
 source .venv/bin/activate
 
 # (Si le venv n'existe pas encore sur une nouvelle machine :)
@@ -52,23 +49,16 @@ source .venv/bin/activate
 
 ### 4.2. Lancer le calculateur de volatilité (CLI)
 
-Une fois l'environnement `.venv` activé :
-
 ```bash
 # Exécution par défaut (Binance, 30 jours, paires EUR)
 python src/main.py
 
-# Ou avec des paramètres surchargés :
-python src/main.py --days 30 --quote EUR --output crypto_volatility.csv
-```
+# Lister les devises de cotation disponibles sur une plateforme :
+python src/main.py --list-quotes
 
-```bash
-# Lancer le serveur de développement Uvicorn
-uvicorn src.main:app --reload --port 8000
+# Exécution avec paramètres surchargés :
+python src/main.py --exchange binance --quote EUR --days 30
 ```
-L'API sera disponible sur :
-- Application : `http://localhost:8000`
-- Documentation interactive (Swagger UI) : `http://localhost:8000/docs`
 
 ---
 
@@ -87,24 +77,3 @@ ruff check .
 # Formater
 ruff format .
 ```
-
----
-
-## 🐳 6. Conteneurisation (Docker)
-
-```bash
-# Build de l'image
-docker build -t test-technique:latest .
-
-# Lancement du conteneur
-docker run -p 8000:8000 test-technique:latest
-```
-
----
-
-## 📌 7. Décisions Techniques & Arbitrages
-
-> *Section réservée aux explications d'architecture, de choix d'algorithmes ou de modèles de données lors de la restitution.*
-
-- **Choix 1 :** ...
-- **Choix 2 :** ...
