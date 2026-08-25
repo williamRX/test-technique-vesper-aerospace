@@ -6,13 +6,7 @@ Ce dépôt contient le projet développé dans le cadre du test technique. Il es
 
 ## 📋 1. Contexte & Objectifs
 
-> *Section à compléter durant l'exercice.*
-
-- **Sujet / Problématique :** [Description du problème]
-- **Objectifs principaux :**
-  - [ ] Objectif 1
-  - [ ] Objectif 2
-  - [ ] Objectif 3
+Calculateur de la **volatilité quotidienne** des crypto-monnaies d'une plateforme d'échange (Binance/Coinbase) cotées contre une monnaie Fiat (ex: `EUR`) sur une période $N$ jours donnée via l'API **CCXT**.
 
 ---
 
@@ -21,15 +15,16 @@ Ce dépôt contient le projet développé dans le cadre du test technique. Il es
 ```text
 .
 ├── Dockerfile            # Containerisation du service
-├── pyproject.toml        # Dépendances & configuration outils (Ruff, Pytest)
+├── pyproject.toml        # Dépendances (CCXT, FastAPI, Pytest, Ruff)
 ├── README.md             # Documentation principale
-├── src/                  # Code source de l'application / scripts
-│   ├── config.py         # Configuration globale & logging
-│   └── main.py           # Coquille API (FastAPI)
-├── tests/                # Suite de tests unitaires et d'intégration
-│   ├── conftest.py       # Fixtures Pytest
-│   └── test_main.py      # Validation de l'API
-└── docs/                 # Documentation complémentaire ou schémas
+├── src/                  # Code source
+│   ├── cli.py            # Point d'entrée CLI
+│   ├── config.py         # Settings & Logging Pydantic v2
+│   ├── main.py           # Point d'entrée script & API
+│   ├── models/           # Dataclasses immuables (MarketCandle, VolatilityResult)
+│   └── services/         # Services CCXT, Métriques mathématiques & Reporter CSV
+├── tests/                # Suite de tests Pytest (11 tests)
+└── docs/                 # Tickets de spécifications (Tickets 1 à 5)
 ```
 
 ---
@@ -37,27 +32,35 @@ Ce dépôt contient le projet développé dans le cadre du test technique. Il es
 ## ⚙️ 3. Préréquis
 
 - **Python :** `>= 3.11`
-- **Docker :** Optional (pour la conteneurisation)
-- **macOS / Linux / Windows**
+- **Docker :** Optionnel (pour la conteneurisation)
 
 ---
 
 ## 🚀 4. Installation & Démarrage Rapide
 
-### 4.1. Environnement virtuel Python
+### 4.1. Activer l'environnement virtuel Python
+
+Le dossier du venv s'appelle **`.venv`** (avec un point au début) :
 
 ```bash
-# 1. Création du venv
-python3 -m venv .venv
-
-# 2. Activation du venv (macOS / Linux)
+# 1. Activation de l'environnement virtuel (macOS / Linux)
 source .venv/bin/activate
 
-# 3. Installation des dépendances et outils dev
-pip install -e ".[dev]"
+# (Si le venv n'existe pas encore sur une nouvelle machine :)
+# python3 -m venv .venv && source .venv/bin/activate && pip install -e ".[dev]"
 ```
 
-### 4.2. Démarrage de l'API (FastAPI)
+### 4.2. Lancer le calculateur de volatilité (CLI)
+
+Une fois l'environnement `.venv` activé :
+
+```bash
+# Exécution par défaut (Binance, 30 jours, paires EUR)
+python src/main.py
+
+# Ou avec des paramètres surchargés :
+python src/main.py --days 30 --quote EUR --output crypto_volatility.csv
+```
 
 ```bash
 # Lancer le serveur de développement Uvicorn
