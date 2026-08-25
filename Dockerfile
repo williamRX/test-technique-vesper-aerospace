@@ -10,15 +10,13 @@ ENV PYTHONUNBUFFERED=1 \
 
 WORKDIR /app
 
-# Copie et installation des dépendances
+# Copie et installation des dépendances du projet
 COPY pyproject.toml .
 RUN pip install --no-cache-dir .
 
-# Copie du code source
+# Copie du code source et des fichiers de spécifications
 COPY src/ ./src/
+COPY README.md .
 
-# Port exposé pour l'API
-EXPOSE 8000
-
-# Commande de démarrage par défaut (FastAPI via Uvicorn)
-CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000"]
+# Commande d'exécution par défaut (CLI Volatilité)
+CMD ["python", "src/main.py"]

@@ -1,11 +1,3 @@
-import pytest
-from fastapi.testclient import TestClient
-
-from src.main import app
-
-
-@pytest.fixture
-def client():
-    """Fixture Pytest fournissant un TestClient FastAPI."""
-    with TestClient(app) as test_client:
-        yield test_client
+"""
+Fixtures Pytest partagées pour la suite de tests.
+"""
