@@ -94,7 +94,6 @@ def run_pipeline(
             return 1
 
         VolatilityReporter.export_to_csv(results=results, output_filepath=selected_output)
-        VolatilityReporter.print_summary_console(results=results, top_n=15)
 
         logger.info(f"✅ Traitement terminé avec succès ! {len(results)} paires analysées.")
         return 0

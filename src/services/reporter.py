@@ -1,13 +1,13 @@
 """
-Module d'affichage de rapport en console et d'exportation au format CSV.
+Module d'exportation des résultats au format CSV.
 
 Pourquoi le module standard `csv.DictWriter` ?
 ----------------------------------------------
 1. Respect Strict du Format Spécifié : Garantit l'en-tête exact demandé dans le cahier des charges :
    `base,quote,daily_volatility,last_price,average_volume`
 2. Zéro Dépendance Lourde : Évite d'obliger l'installation de Pandas uniquement pour
-   écrire 50 lignes dans un CSV, réduisant le temps de démarrage du script à quelques millisecondes.
-3. Écriture Atomique et Sûre : Crée automatiquement les dossiers parents si nécessaire et gère l'encodage UTF-8.
+   écrire des lignes dans un CSV, réduisant le temps de démarrage du script à quelques millisecondes.
+3. Écriture Atomique et Sûre : Crée automatiquement le dossier destination (`csv/`) et gère l'encodage UTF-8.
 """
 
 import csv
@@ -22,7 +22,7 @@ logger = logging.getLogger(settings.PROJECT_NAME)
 
 class VolatilityReporter:
     """
-    Gestionnaire d'exportation des résultats et d'affichage de synthèse.
+    Gestionnaire d'exportation CSV des résultats de volatilité.
     """
 
     CSV_HEADER = ["base", "quote", "daily_volatility", "last_price", "average_volume"]
@@ -95,40 +95,3 @@ class VolatilityReporter:
 
         logger.info(f"Export CSV réussi : {destination}")
         return destination
-
-    @classmethod
-    def print_summary_console(cls, results: list[VolatilityResult], top_n: int = 10) -> None:
-        """
-        Affiche une synthèse mise en forme des résultats les plus volatils dans le terminal.
-
-        Args:
-            results (list[VolatilityResult]): Liste des résultats calculés.
-            top_n (int): Nombre d'actifs à afficher dans le classement.
-        """
-        if not results:
-            print("\n⚠️ Aucun résultat à afficher.")
-            return
-
-        # Tri par volatilité quotidienne décroissante
-        sorted_results = sorted(results, key=lambda x: x.daily_volatility, reverse=True)
-
-        print("\n" + "=" * 80)
-        print(
-            f"📊 RÉSULTATS DE VOLATILITÉ CRYPTO / {results[0].quote} (Top {min(top_n, len(results))})"
-        )
-        print("=" * 80)
-        print(
-            f"{'BASE':<8} {'QUOTE':<6} {'DAILY VOLATILITY':<22} {'LAST PRICE':<16} {'AVG VOLUME':<16}"
-        )
-        print("-" * 80)
-
-        for res in sorted_results[:top_n]:
-            print(
-                f"{res.base:<8} "
-                f"{res.quote:<6} "
-                f"{res.daily_volatility:<22.8f} "
-                f"{res.last_price:<16.2f} "
-                f"{res.average_volume:<16.2f}"
-            )
-
-        print("=" * 80 + "\n")
